@@ -1,0 +1,40 @@
+- id: EDU
+  name: Education
+  description: Learning resources, tutorials, lectures, how-to explanations
+  aliases: [learning, tutorial]
+- id: TECH
+  name: Technology
+  description: Software, hardware, programming, gadgets, AI topics
+  aliases: [software, programming]
+- id: SCI
+  name: Science
+  description: Scientific discoveries, experiments, physics, biology, research
+  aliases: [research]
+- id: NEWS
+  name: News & Current Events
+  description: Timely reporting, world events, breaking news, politics
+  aliases: [politics]
+- id: FIN
+  name: Finance & Economy
+  description: Investing, markets, crypto, personal finance, economic analysis
+  aliases: [investing, crypto]
+- id: ENT
+  name: Entertainment
+  description: Movies, TV, streaming, celebrity culture, general pop media
+  aliases: [movies, tv]
+- id: GAM
+  name: Gaming
+  description: Video games, esports, gameplay highlights, game reviews
+  aliases: [games]
+- id: MUS
+  name: Music
+  description: Songs, music videos, performances, instruments, audio production
+  aliases: [song]
+- id: LIF
+  name: Lifestyle & Health
+  description: Fitness, wellness, habits, cooking, travel, daily routines
+  aliases: [health, fitness]
+- id: SPO
+  name: Sports
+  description: Athletic events, highlights, analysis, competitions
+  aliases: [athletics]

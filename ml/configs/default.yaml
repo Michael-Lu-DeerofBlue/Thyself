@@ -1,0 +1,14 @@
+seed: 42
+model: minilm
+train:
+  data: ml/data/example.csv
+  t0: ml/taxonomies/t0.yaml
+  epochs: 25
+  lr: 0.001
+  hidden: 256
+  val_ratio: 0.2
+  patience: 5
+  threshold: 0.5
+infer:
+  topk: 10
+  temperature: 1.0
