@@ -1,1 +1,1 @@
-# Thyself
+This is the start of Thyself
