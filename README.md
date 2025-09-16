@@ -80,6 +80,3 @@ python tools/sample_titles.py --input local-events.json --output results.jsonl
 
 ## Disclaimer
 The example dataset is tiny and illustrative only; for real performance you must curate a larger labeled corpus.
-
----
-Generated initially via specification in `PROMPT.md`. Contributions welcome.
