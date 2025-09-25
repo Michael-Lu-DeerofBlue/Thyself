@@ -1,0 +1,138 @@
+###############################################
+# Thyself Project .gitignore
+# Python ML + Chrome MV3 Extension + local data
+###############################################
+
+# --- Core Python build / artifacts ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+build/
+dist/
+*.egg-info/
+*.egg
+
+# --- Virtual environments ---
+.venv/
+venv/
+env/
+.env
+.env.*
+
+# --- Python tooling caches ---
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.hypothesis/
+.coverage
+coverage.xml
+htmlcov/
+.benchmarks/
+
+# --- Jupyter / IPython ---
+.ipynb_checkpoints/
+profile_default/
+ipython_config.py
+
+# --- Logs & debug artifacts ---
+*.log
+logs/
+debug.log
+
+# --- Model / training outputs (keep small example data) ---
+ml/checkpoints/
+ml/runs/
+ml/outputs/
+ml/tmp/
+*.pt
+*.bin
+*.ckpt
+*.onnx
+*.npz
+*.npy
+
+# If you want to keep a specific example dataset, whitelist it below
+!ml/data/example.csv
+
+# Large intermediate exported embeddings or vectors
+ml/data/*_embeddings*.json
+ml/data/*_embeddings*.pkl
+
+# --- Local browsing event exports (do not commit personal data) ---
+local-events*.json
+events-export*.json
+exported-events*.json
+*events_backup*.json
+
+# --- Temporary analysis / scratch files ---
+scratch*/
+tmp*/
+*.tmp
+*.bak
+*.swp
+*.orig
+*.rej
+
+# --- OS / Editor noise ---
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+*.lnk
+~$*
+*.iml
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# --- Node / web extension tooling (future) ---
+node_modules/
+package-lock.json
+pnpm-lock.yaml
+*.tsbuildinfo
+
+# Built / packaged extension bundles
+extension/dist/
+extension/build/
+extension/*.crx
+extension/*.zip
+
+# --- Misc security / secrets ---
+*.key
+*.pem
+*.crt
+*.pfx
+secrets*/
+
+# --- Coverage / profiling ---
+prof/*.prof
+*.prof
+
+# --- Cache directories (general) ---
+.cache/
+cache/
+
+# --- Python compiled protocol buffers or cython (if added later) ---
+*.c
+*.cpp
+*.pyd
+
+# --- Ignore large raw datasets except explicitly whitelisted examples ---
+ml/data/raw/**
+ml/data/private/**
+
+# Whitelist taxonomy & config files
+!ml/taxonomies/**
+!ml/configs/**
+
+# --- Ignore user-specific exports or ranking outputs ---
+inference_results*.jsonl
+ranking_output*.jsonl
+
+# --- Allow README & docs ---
+!README.md
+docs/_build/
+
+# End of file

@@ -1,4 +1,15 @@
-import { getRecent, clearAll } from "./db.js";
+function getRecent(limit=200) {
+  return new Promise(resolve => {
+    chrome.runtime.sendMessage({ type: 'LCL_GET_RECENT', limit }, resp => {
+      resolve((resp && resp.ok && resp.data) ? resp.data : []);
+    });
+  });
+}
+function clearAll() {
+  return new Promise(resolve => {
+    chrome.runtime.sendMessage({ type: 'LCL_CLEAR' }, () => resolve());
+  });
+}
 async function render() {
   const items = await getRecent(200);
   document.getElementById("out").textContent = JSON.stringify(items, null, 2);
