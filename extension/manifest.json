@@ -1,14 +1,17 @@
 {
   "manifest_version": 3,
-  "name": "Local Content Logger",
-  "version": "0.1.0",
-  "description": "Logs browsing events locally (privacy-first, no network).",
+  "name": "YouTube Title Harvester (Local Only)",
+  "version": "0.2.0",
+  "description": "Captures YouTube feed & shorts video titles locally for offline taxonomy analysis.",
   "permissions": ["storage"],
-  "host_permissions": ["https://*/*", "http://*/*"],
   "background": { "service_worker": "background.js", "type": "module" },
   "action": { "default_popup": "dashboard.html" },
   "content_scripts": [{
-    "matches": ["<all_urls>"],
+    "matches": [
+      "https://www.youtube.com/*",
+      "https://m.youtube.com/*",
+      "https://youtube.com/*"
+    ],
     "js": ["content.js"],
     "run_at": "document_idle"
   }]

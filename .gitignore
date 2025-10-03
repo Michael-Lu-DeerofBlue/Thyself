@@ -50,14 +50,20 @@ ml/tmp/
 *.ckpt
 *.onnx
 *.npz
+# Allow committing taxonomy JSON if desired
+!ml/taxonomies/taxonomy.json
+# Explicitly ignore embedding label caches even if other rules change
+ml/out/label_cache_*.npz
 *.npy
 
-# If you want to keep a specific example dataset, whitelist it below
-!ml/data/example.csv
+###############################################
+# Ignore all data artifacts under ml/data now
+# (explicit blanket to avoid accidental commits of private/exported titles)
+ml/data/**
+# Optional: uncomment to keep a small placeholder example
+#!ml/data/example.csv
 
-# Large intermediate exported embeddings or vectors
-ml/data/*_embeddings*.json
-ml/data/*_embeddings*.pkl
+# (Removed fine-grained ml/data embedding patterns; blanket rule above supersedes.)
 
 # --- Local browsing event exports (do not commit personal data) ---
 local-events*.json

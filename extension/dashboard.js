@@ -28,7 +28,7 @@ document.getElementById("export").onclick = async () => {
 document.getElementById("exportTitles").onclick = async () => {
   const userId = (document.getElementById('userId').value || '12345').trim();
   const items = await getRecent(10000);
-  // Titles come from page_title, feed_video, shorts_video, or any event with a title
+  // Titles come only from feed_video and shorts_video events now (page_title removed)
   const titles = [];
   const seen = new Set();
   for (const ev of items) {

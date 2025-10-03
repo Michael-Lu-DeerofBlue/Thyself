@@ -11,7 +11,6 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 # Import from project modules
-from ml.src.infer import supervised_infer
 from ml.src.models import Embedder
 import yaml
 import re
@@ -259,19 +258,7 @@ def zero_shot_joint_titles(titles: List[str], taxonomy_path: str, model_key: str
 
 
 def predict_titles(titles: List[str], mode: str, model_path: str, taxonomy_path: str, topk: int = 1, alpha: float = 0.3, topk_parent: int | None = None, output_format: str = 'pair-array', embedder_key: str = 'minilm', detail: bool = False, topk_children: int = 10):
-    if mode == 'supervised':
-        # Legacy flat: return top-1 name only
-        id_to_name = build_id_to_name(taxonomy_path)
-        ranked_all = supervised_infer(titles, model_dir=model_path, topk=topk)
-        mapping: Dict[str, Any] = {}
-        for title, ranked in zip(titles, ranked_all):
-            if not ranked:
-                mapping[title] = None
-                continue
-            top_id, _ = ranked[0]
-            mapping[title] = id_to_name.get(top_id, str(top_id))
-        return mapping
-    elif mode in ('zero-shot', 'zero-shot-flat'):
+    if mode in ('zero-shot', 'zero-shot-flat'):
         # Flat zero-shot over parents only using cached embeddings
         emb = Embedder(embedder_key)
         parents, _children, p_emb, _c_emb = get_cached_label_embeddings(taxonomy_path, embedder_key, emb)
@@ -324,7 +311,7 @@ def main():
     ap.add_argument('--output', '-o', default='ml/data/titles_tagged.json', help='Path to write output JSON')
     ap.add_argument('--taxonomy', default='ml/taxonomies/taxonomy.json', help='Path to taxonomy file (JSON or YAML)')
     ap.add_argument('--model-path', default='ml/out/model.pt', help='Checkpoint path for supervised mode')
-    ap.add_argument('--mode', choices=['supervised', 'zero-shot', 'zero-shot-joint'], default='zero-shot-joint', help='Prediction mode')
+    ap.add_argument('--mode', choices=['zero-shot', 'zero-shot-joint'], default='zero-shot-joint', help='Prediction mode')
     ap.add_argument('--topk', type=int, default=1, help='How many labels to consider; output uses top-1')
     ap.add_argument('--alpha', type=float, default=0.3, help='Parent contribution for joint scoring (0-1)')
     ap.add_argument('--topk-parent', type=int, default=None, help='Restrict children to top-K parents (optional)')
@@ -334,8 +321,7 @@ def main():
     ap.add_argument('--topk-children', type=int, default=10, help='Top-K children (or parents in flat mode) to include when --detail.')
     args = ap.parse_args()
 
-    if args.mode == 'supervised' and not os.path.exists(args.model_path):
-        raise SystemExit(f"Model checkpoint not found: {args.model_path}")
+    # Supervised mode removed in zero-shot-only cleanup.
 
     user_id, titles = load_titles(args.input)
     mapping = predict_titles(

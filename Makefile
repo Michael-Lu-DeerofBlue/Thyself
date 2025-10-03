@@ -1,24 +1,9 @@
 PY=python
-DATA=ml/data/example.csv
-T0=ml/taxonomies/t0.yaml
-OUT=ml/out
-MODEL_PT=$(OUT)/model.pt
-CONFIG=ml/configs/default.yaml
+TAXO_YAML=ml/taxonomies/t0.yaml
+TAXO_JSON=ml/taxonomies/taxonomy.json
+CACHE_DIR=ml/out
 
-.PHONY: train eval infer export tests apply-titles
-
-train:
-	$(PY) ml/src/train.py --data $(DATA) --t0 $(T0) --out_dir $(OUT)
-
-eval:
-	@echo "(Placeholder) run evaluation metrics after training"
-	# Could load saved logits/scores; integrate as needed.
-
-infer:
-	$(PY) ml/src/infer.py --titles "$(title)"
-
-infer-supervised:
-	$(PY) ml/src/infer.py --titles "$(title)" --supervised
+.PHONY: export tests apply-titles convert-taxonomy clean-cache zero-shot-example
 
 export:
 	@echo Zipping extension directory...
@@ -27,6 +12,30 @@ export:
 tests:
 	pytest -q
 
-# Apply taxonomy to titles.json (usage: make apply-titles [mode=supervised] [input=ml/data/titles.json] [output=ml/data/titles_tagged.json])
+# Apply taxonomy (zero-shot or joint). Usage overrides:
+# make apply-titles mode=zero-shot-joint input=ml/data/titles.json output=ml/data/titles_tagged.json embedder=minilm alpha=0.3 topk_parent=8 detail=1
 apply-titles:
-	$(PY) tools/apply_titles.py --mode $(mode) --input $(input) --output $(output)
+	$(PY) tools/apply_titles.py --mode $(mode) --input $(input) --output $(output) --embedder $(embedder) --alpha $(alpha) --topk-parent $(topk_parent) $(if $(detail),--detail,) $(if $(topk_children),--topk-children $(topk_children),)
+
+# Convert editable YAML taxonomy to canonical JSON (for stable caching)
+convert-taxonomy:
+	$(PY) tools/convert_taxonomy.py --input $(TAXO_YAML) --output $(TAXO_JSON)
+
+# Remove cached label embeddings
+clean-cache:
+	@if exist $(CACHE_DIR) (powershell -Command "Get-ChildItem -Path $(CACHE_DIR) -Filter 'label_cache_*.npz' -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue")
+	@echo Cleared label cache files.
+
+# Quick demo classification using defaults
+zero-shot-example:
+	$(PY) tools/apply_titles.py --mode zero-shot-joint --taxonomy $(TAXO_YAML) --input ml/data/titles.json --output ml/data/titles_tagged_example.json --alpha 0.3 --embedder minilm --topk-parent 8
+
+# Sensible defaults if user omits variables
+mode?=zero-shot-joint
+input?=ml/data/titles.json
+output?=ml/data/titles_tagged.json
+embedder?=minilm
+alpha?=0.3
+topk_parent?=8
+detail?=0
+topk_children?=10

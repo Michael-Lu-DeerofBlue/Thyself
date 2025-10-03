@@ -1,42 +1,12 @@
-// Content script: collects interaction metrics and sends them to background via messaging.
- (function() {
-  // -------------------- Generic page dwell + click + video events --------------------
-  const pageMeta = () => ({ url: location.href, title: document.title });
-  let visibleSince = document.visibilityState === 'visible' ? Date.now() : null;
-  let dwellMs = 0, clicks = 0;
-
-  function send(payload) {
-    try { chrome.runtime.sendMessage({ type: 'LCL_ADD_EVENT', payload }); } catch (_) {}
-  }
-  function flush(reason) {
-    const { url, title } = pageMeta();
-    send({ ts: Date.now(), url, title, dwellMs, clicks, type: 'page', reason });
-  }
-  document.addEventListener('click', () => { clicks += 1; }, { capture: true });
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'hidden' && visibleSince) { dwellMs += Date.now() - visibleSince; visibleSince = null; flush('hidden'); }
-    else if (document.visibilityState === 'visible') { visibleSince = Date.now(); }
-  });
-  window.addEventListener('beforeunload', () => { if (visibleSince) dwellMs += Date.now() - visibleSince; flush('unload'); });
-
-  // Title-only mode: skip binding to <video> events to reduce noise
-  function hookVideos() { /* no-op to avoid video_* events */ }
+// Content script focused solely on harvesting YouTube feed & shorts titles.
+(function() {
+  function send(payload) { try { chrome.runtime.sendMessage({ type: 'LCL_ADD_EVENT', payload }); } catch(_) {} }
 
   // -------------------- Robust YouTube feed harvesting --------------------
   if (location.hostname.includes('youtube.com')) {
-    const DEBUG = localStorage.getItem('LCL_DEBUG') === '1';
     const seen = new Set(); // key = videoId|page
     let positionCounter = 0;
     let currentPath = location.pathname;
-    let pendingDebug = null;
-
-    function debug(obj) {
-      if (!DEBUG) return;
-      if (pendingDebug) clearTimeout(pendingDebug);
-      pendingDebug = setTimeout(() => {
-        send({ ts: Date.now(), type: 'debug_feed_scan', page: currentPath, ...obj });
-      }, 500);
-    }
 
     function extractVideoIdFromHref(href) {
       if (!href) return null;
@@ -170,14 +140,13 @@
       });
     }, { rootMargin: '0px 0px 600px 0px', threshold: 0 });
 
-    function scanAll(label) {
+    function scanAll() {
       const { variant, nodes } = candidateNodes();
       let considered = 0;
       nodes.forEach(n => {
         considered += 1;
         io.observe(n);
       });
-      debug({ scan: label || 'tick', variant, nodes: nodes.length, considered, seen: seen.size });
     }
 
     // -------------------- Shorts harvesting (desktop & mobile) --------------------
@@ -187,7 +156,7 @@
       const m = href.match(/\/shorts\/([A-Za-z0-9_-]{6,})/);
       return m ? m[1] : null;
     }
-    function scanShorts(label) {
+    function scanShorts() {
       try {
         const anchors = document.querySelectorAll('a[href^="/shorts/"]');
         let added = 0;
@@ -219,36 +188,30 @@
             page: currentPath,
           });
         });
-        if (added) debug({ shortsAdded: added, scan: label || 'shorts' });
       } catch (_) {}
     }
 
     // Mutation observer to catch dynamic appends
     const mo = new MutationObserver(muts => {
-      let added = 0;
       for (const m of muts) {
         m.addedNodes && m.addedNodes.forEach(nd => {
           if (!(nd instanceof HTMLElement)) return;
           if (nd.matches && (nd.matches('ytd-rich-item-renderer') || nd.matches('ytm-rich-item-renderer') || nd.matches('ytm-video-with-context-renderer'))) {
-            added += 1;
             io.observe(nd);
           }
-          // If a newly added subtree may contain shorts links, trigger scanShorts soon
           if (nd.querySelector && nd.querySelector('a[href^="/shorts/"]')) {
-            setTimeout(() => scanShorts('mutation'), 400);
+            setTimeout(() => scanShorts(), 400);
           }
         });
       }
-      if (added) debug({ mutationAdded: added, seen: seen.size });
     });
     mo.observe(document.documentElement, { childList: true, subtree: true });
 
     // Periodic sweep (in case some nodes missed)
-    setInterval(() => scanAll('interval'), 8000);
-  setInterval(() => scanShorts('interval'), 9000);
-    // Initial scan after small delay to allow initial hydration
-    setTimeout(() => scanAll('initial'), 1000);
-  setTimeout(() => scanShorts('initial'), 1400);
+  setInterval(scanAll, 8000);
+  setInterval(scanShorts, 9000);
+  setTimeout(scanAll, 1000);
+  setTimeout(scanShorts, 1400);
 
     // Navigation detection (YouTube SPA)
     function handleNavigation() {
@@ -256,9 +219,8 @@
       currentPath = location.pathname;
       positionCounter = 0;
       seen.clear();
-      debug({ nav: currentPath });
-      setTimeout(() => scanAll('nav'), 700); // wait a bit for new feed load
-      setTimeout(() => scanShorts('nav'), 900);
+      setTimeout(scanAll, 700); // wait a bit for new feed load
+      setTimeout(scanShorts, 900);
     }
     ['pushState','replaceState'].forEach(fn => {
       const orig = history[fn];
