@@ -19,18 +19,8 @@
   });
   window.addEventListener('beforeunload', () => { if (visibleSince) dwellMs += Date.now() - visibleSince; flush('unload'); });
 
-  function hookVideos() {
-    document.querySelectorAll('video').forEach(v => {
-      if (v._lclBound) return;
-      v._lclBound = true;
-      const meta = () => ({ ...pageMeta(), src: v.currentSrc, dur: v.duration, cur: v.currentTime });
-      v.addEventListener('play',  () => send({ ts: Date.now(), type: 'video_play',  ...meta() }));
-      v.addEventListener('pause', () => send({ ts: Date.now(), type: 'video_pause', ...meta() }));
-      v.addEventListener('ended', () => send({ ts: Date.now(), type: 'video_ended', ...meta() }));
-    });
-  }
-  hookVideos();
-  new MutationObserver(hookVideos).observe(document.documentElement, { childList: true, subtree: true });
+  // Title-only mode: skip binding to <video> events to reduce noise
+  function hookVideos() { /* no-op to avoid video_* events */ }
 
   // -------------------- Robust YouTube feed harvesting --------------------
   if (location.hostname.includes('youtube.com')) {

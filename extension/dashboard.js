@@ -25,6 +25,25 @@ document.getElementById("export").onclick = async () => {
   a.click();
 };
 
+document.getElementById("exportTitles").onclick = async () => {
+  const userId = (document.getElementById('userId').value || '12345').trim();
+  const items = await getRecent(10000);
+  // Titles come from page_title, feed_video, shorts_video, or any event with a title
+  const titles = [];
+  const seen = new Set();
+  for (const ev of items) {
+    const t = (ev && ev.title && String(ev.title).trim()) || '';
+    if (!t) continue;
+    if (seen.has(t)) continue;
+    seen.add(t);
+    titles.push(t);
+  }
+  const out = { user_id: userId, titles };
+  const blob = new Blob([JSON.stringify(out, null, 2)], { type: 'application/json' });
+  const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: 'titles.json' });
+  a.click();
+};
+
 document.getElementById("clear").onclick = async () => { await clearAll(); render(); };
 
 render();

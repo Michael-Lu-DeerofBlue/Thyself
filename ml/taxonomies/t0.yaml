@@ -1,40 +1,157 @@
-- id: EDU
-  name: Education
-  description: Learning resources, tutorials, lectures, how-to explanations
-  aliases: [learning, tutorial]
-- id: TECH
-  name: Technology
-  description: Software, hardware, programming, gadgets, AI topics
-  aliases: [software, programming]
-- id: SCI
-  name: Science
-  description: Scientific discoveries, experiments, physics, biology, research
-  aliases: [research]
-- id: NEWS
-  name: News & Current Events
-  description: Timely reporting, world events, breaking news, politics
-  aliases: [politics]
-- id: FIN
-  name: Finance & Economy
-  description: Investing, markets, crypto, personal finance, economic analysis
-  aliases: [investing, crypto]
-- id: ENT
-  name: Entertainment
-  description: Movies, TV, streaming, celebrity culture, general pop media
-  aliases: [movies, tv]
-- id: GAM
-  name: Gaming
-  description: Video games, esports, gameplay highlights, game reviews
-  aliases: [games]
-- id: MUS
-  name: Music
-  description: Songs, music videos, performances, instruments, audio production
-  aliases: [song]
-- id: LIF
-  name: Lifestyle & Health
-  description: Fitness, wellness, habits, cooking, travel, daily routines
-  aliases: [health, fitness]
-- id: SPO
-  name: Sports
-  description: Athletic events, highlights, analysis, competitions
-  aliases: [athletics]
+t0:
+  - id: politics
+    en: Politics
+    desc: Government, policy, law, rights, elections, geopolitics, and regional or country-level public affairs worldwide.
+    t1:
+      - {id: eastasia, en: East Asia, desc: "Politics and policy across China-adjacent East Asia, Japan, Koreas, Taiwan, Mongolia."}
+      - {id: southasia, en: South Asia, desc: "India, Pakistan, Bangladesh, Sri Lanka, Nepal, Bhutan, Maldives—governance and regional issues."}
+      - {id: europe, en: Europe, desc: "EU and wider European politics, elections, institutions, regional security and integration."}
+      - {id: africa, en: Africa, desc: "Continental and sub-regional governance, development, conflict, diplomacy, and regional organizations."}
+      - {id: middleeast, en: Middle East, desc: "MENA politics, religion–state dynamics, conflicts, energy, and regional alliances."}
+      - {id: us, en: United States, desc: "U.S. federal and state politics, elections, institutions, and foreign policy."}
+      - {id: russia, en: Russia, desc: "Russian domestic politics, security state, economy–politics interplay, war and diplomacy."}
+      - {id: china, en: China, desc: "PRC governance, policy, party–state institutions, regions, and international relations."}
+      - {id: uk, en: United Kingdom, desc: "UK politics, Parliament, parties, devolved nations, and post-Brexit governance."}
+      - {id: latinamerica, en: Latin America, desc: "Politics across Central/South America and Caribbean; reform, security, and integration."}
+      - {id: oceania, en: Oceania, desc: "Australia, New Zealand, and Pacific Islands—policy, diplomacy, and regional affairs."}
+      - {id: global, en: Global Issues, desc: "Multilateralism, development, migration, human rights, global governance, and institutions."}
+      - {id: military, en: Military, desc: "Defense policy, armed forces, strategy, procurement, security technology, and conflicts."}
+
+  - id: business
+    en: Business
+    desc: Firms, markets, trade, finance, strategy, and work; from macroeconomy to company operations and personal finance.
+    t1:
+      - {id: economy, en: Economy & Macroeconomics, desc: "Growth, inflation, employment, fiscal/monetary policy, and national accounts."}
+      - {id: corporate, en: Companies & Strategy, desc: "Corporate leadership, business models, operations, org design, and governance."}
+      - {id: markets, en: Markets & Investing, desc: "Equities, fixed income, FX, commodities, crypto, trading, and analysis."}
+      - {id: startups, en: Startups & VC, desc: "Early-stage companies, funding, product-market fit, scaling, and exits."}
+      - {id: trade, en: Trade & Supply Chains, desc: "Global trade flows, logistics, industrial policy, and supply-chain resilience."}
+      - {id: realestate, en: Real Estate & Property, desc: "Housing and commercial property, construction, pricing, and development."}
+      - {id: personalfinance, en: Personal Finance, desc: "Budgeting, saving, credit, insurance, taxes, and retirement planning."}
+
+  - id: technology
+    en: Technology
+    desc: Software, AI, hardware, platforms, security, and emerging tech shaping digital products, infrastructure, and society.
+    t1:
+      - {id: ai, en: AI & Data, desc: "Machine learning, generative models, data engineering, applications, safety, and ethics."}
+      - {id: software, en: Software Engineering, desc: "Programming, frameworks, DevOps, testing, architecture, and developer tooling."}
+      - {id: hardware, en: Consumer Tech & Gadgets, desc: "Phones, wearables, PCs, peripherals, reviews, and user hardware ecosystems."}
+      - {id: semiconductors, en: Hardware & Semiconductors, desc: "Chips, design, fabs, packaging, GPUs, EDA, and supply chains."}
+      - {id: cybersecurity, en: Cybersecurity & Privacy, desc: "Threats, vulns, cryptography, incident response, compliance, and privacy tech."}
+      - {id: robotics, en: Robotics & Automation, desc: "Industrial robots, drones, autonomy, manufacturing and service automation."}
+      - {id: blockchain, en: Web3 & Blockchain, desc: "Protocols, crypto, smart contracts, DeFi, and decentralized infrastructure."}
+      - {id: cars, en: Traditional/Electric/Autonomous Vehicles, desc: "ICE and EV tech, autonomy stacks, charging, regulation, and mobility."}
+      - {id: vr, en: VR & AR, desc: "Virtual/augmented/mixed reality devices, platforms, applications, and content ecosystems."}
+
+  - id: knowledge
+    en: Knowledge
+    desc: Foundational and academic domains—science, research, ideas, methods, nature, space, and the study of society.
+    t1:
+      - {id: physics, en: Physics & Math, desc: "Physical laws, mathematics, theory/experiments, and education in these disciplines."}
+      - {id: chemistry, en: Chemistry, desc: "Chemical reactions, synthesis, analytical techniques, and chemical engineering basics."}
+      - {id: philosophy, en: Philosophy & Epistemology, desc: "Metaphysics, ethics, logic, epistemology, and philosophy of mind/science."}
+      - {id: languages, en: Languages & Linguistics, desc: "Language learning, linguistics, phonetics, grammar, and translation."}
+      - {id: space, en: Space & Astronomy, desc: "Astronomy, astrophysics, missions, telescopes, and space exploration."}
+      - {id: biology, en: Biology & Biotech, desc: "Molecular/cellular biology, genetics, biotech, and ecosystems."}
+      - {id: materials, en: Materials Science, desc: "New materials, nanomaterials, batteries, composites, and characterization."}
+      - {id: ecology, en: Earth & Ecology, desc: "Geology, climate, biodiversity, ecosystems, and earth-system science."}
+      - {id: research, en: Research & Academia, desc: "Methods, peer review, reproducibility, publishing, and university life."}
+      - {id: history, en: History & Archaeology, desc: "Historical events, sources, archaeology, heritage, and historiography."}
+      - {id: psychology, en: Psychology & Cognitive Science, desc: "Cognition, behavior, mental processes, and brain science foundations."}
+      - {id: anthropology, en: Anthropology & Sociology, desc: "Cultures, social structures, fieldwork, demography, and institutions."}
+      - {id: economics, en: Economics, desc: "Micro/macro theory, econometrics, development, and policy analysis."}
+
+  - id: health
+    en: Health
+    desc: Human health across medicine, public health, fitness, mental wellbeing, and aging.
+    t1:
+      - {id: medicine, en: Medicine & Care, desc: "Clinical practice, diseases, diagnostics, therapies, and healthcare delivery."}
+      - {id: publichealth, en: Public Health, desc: "Epidemiology, prevention, policy, programs, and population health."}
+      - {id: mentalhealth, en: Mental Health & Psychology, desc: "Wellbeing, disorders, therapy, and neuroscience insights."}
+      - {id: nutrition, en: Nutrition, desc: "Diet, metabolism, dietary science, food safety, and interventions."}
+      - {id: longevity, en: Longevity & Aging, desc: "Aging biology, biomarkers, interventions, and gerontology."}
+      - {id: fitness, en: Fitness & Exercise, desc: "Training methods, exercise science, performance, and sports health."}
+
+  - id: arts
+    en: Arts
+    desc: Literature, visual and performing arts, design, music, film, fashion, and architectural culture and criticism.
+    t1:
+      - {id: literature, en: Literature & Books, desc: "Novels, poetry, essays, criticism, authors, and publishing."}
+      - {id: visualarts, en: Visual Arts & Design, desc: "Painting, sculpture, illustration, graphic/industrial design, and exhibitions."}
+      - {id: film, en: Film & Cinema, desc: "Film history, reviews, filmmaking, festivals, and auteurs."}
+      - {id: television, en: Television & Drama, desc: "Series, drama, streaming originals, and critical analysis."}
+      - {id: music, en: Music, desc: "Albums, genres, artists, composition, performance, and the music industry."}
+      - {id: theatre, en: Theatre & Performance, desc: "Stage plays, opera, performance art, direction, and criticism."}
+      - {id: photography, en: Photography, desc: "Photographic practice, history, techniques, and exhibitions."}
+      - {id: dance, en: Dance, desc: "Ballet, contemporary, choreography, and performance reviews."}
+      - {id: designerfashion, en: Designer Fashion, desc: "Runways, couture, designers, houses, and industry trends."}
+      - {id: architecture, en: Architecture, desc: "Buildings, urbanism, design theory, practice, and critiques."}
+
+  - id: entertainment
+    en: Entertainment
+    desc: Pop culture and creator-driven media: anime, vlogs, comedy, idols, internet trends, and personality-led content.
+    t1:
+      - {id: anime, en: Anime, desc: "Anime, manga, manhua, and japanese anime."}
+      - {id: popculture, en: Pop Culture, desc: "Memes, viral trends, celebrities, and internet culture."}
+      - {id: creators, en: Creator Economy, desc: "Platforms, monetization, sponsorships, content operations, and analytics."}
+      - {id: vlog, en: Vlog, desc: "Personal vlogs, lifestyle series, challenges, and variety formats."}
+      - {id: comedy, en: Humor & Skits, desc: "Sketches, stand-up, parody, satire, and humorous shorts."}
+      - {id: kpop, en: K-Pop, desc: "Korean Idol groups, comebacks, fandom culture, and industry dynamics."}
+      - {id: celebrities, en: Celebrities & Influencers, desc: "Celebrity news, influencer culture, and social media personalities."}
+      - {id: american_celebrities, en: American Celebrities & Influencers, desc: "U.S. celebrity news, influencer culture, and social media personalities."}
+      - {id: hotguys, en: Hot Guys & Glamour, desc: "Male glamour or looks-focused content and style; non-explicit."}
+      - {id: hotgirls, en: Hot Girls & Glamour, desc: "Female glamour or looks-focused content and style; non-explicit."}
+
+  - id: lifestyle
+    en: Lifestyle
+    desc: Everyday living, community, identity, practical skills, travel, food, pets, careers, and personal development.
+    t1:
+      - {id: education, en: Education & Schooling, desc: "School systems, pedagogy, admissions, study skills, and edtech."}
+      - {id: parenting, en: Family & Parenting, desc: "Pregnancy, childcare, family life, and parenting approaches."}
+      - {id: food, en: Food & Cuisine, desc: "Cooking, recipes, restaurants, culinary culture, and food prep."}
+      - {id: fashion, en: Fashion & Beauty, desc: "Style, skincare, cosmetics, grooming, and personal aesthetics."}
+      - {id: travel, en: Travel & Outdoor, desc: "Destinations, itineraries, hiking/camping, and travel planning."}
+      - {id: pets, en: Pets & Animals, desc: "Pet care, training, animal welfare, and companion life."}
+      - {id: agriculture, en: Rural & Agriculture, desc: "Farming, rural livelihoods, agritech, and smallholder stories."}
+      - {id: careers, en: Work & Careers, desc: "Jobs, hiring, workplace skills, productivity, and career growth."}
+      - {id: relationships, en: Relationships & Dating, desc: "Dating, partnership, marriage, and interpersonal advice."}
+      - {id: spirituality, en: Spirituality & Religion, desc: "Belief systems, practices, communities, and philosophy of life."}
+      - {id: activism, en: Activism & Social Issues, desc: "Social movements, campaigns, community organizing, and civic action."}
+
+  - id: sports
+    en: Sports
+    desc: Competitive sports, leagues, training, tactics, business, and major events.
+    t1:
+      - {id: soccer, en: Football/Soccer, desc: "Clubs, leagues, tactics, transfers, and international tournaments."}
+      - {id: basketball, en: Basketball, desc: "NBA/FIBA, leagues, analysis, skills, and player development."}
+      - {id: tennis, en: Tennis, desc: "ATP/WTA, Grand Slams, match analysis, and techniques."}
+      - {id: baseball, en: Baseball, desc: "MLB/NPB and other leagues, analysis, and skills."}
+      - {id: running, en: Running & Athletics, desc: "Track, marathons, training, biomechanics, and events."}
+      - {id: cycling, en: Cycling & Mountain Biking, desc: "Road/MTB, racing, training, and gear."}
+      - {id: combat, en: Combat Sports, desc: "Boxing, MMA, wrestling, and martial arts disciplines."}
+      - {id: motorsports, en: Motorsports, desc: "F1, MotoGP, rally, endurance racing, teams, and tech."}
+
+  - id: gaming
+    en: Gaming
+    desc: Video games and adjacent culture—platforms, genres, esports, creation, reviews, and tabletop.
+    t1:
+      - {id: esports, en: Esports, desc: "Competitive leagues, tournaments, teams, and professional scenes."}
+      - {id: pc, en: PC Gaming, desc: "PC titles, hardware tuning, mods, and performance optimization."}
+      - {id: console, en: Console Gaming, desc: "Console ecosystems, exclusives, online services, and accessories."}
+      - {id: mobile, en: Mobile Gaming, desc: "Mobile titles, gacha, casual and competitive play."}
+      - {id: nintendo, en: Nintendo, desc: "Nintendo platforms, first-party franchises, directs, and community."}
+      - {id: playstation, en: PlayStation, desc: "PlayStation consoles, exclusives, PSN ecosystem, and studios."}
+      - {id: xbox, en: Xbox, desc: "Xbox consoles, Game Pass, first-party studios, and services."}
+      - {id: rpg, en: RPG, desc: "Role-playing games including JRPG/ARPG systems, builds, and narrative."}
+      - {id: fps, en: FPS, desc: "First-person shooters, tactics, metas, and competitive play."}
+      - {id: moba, en: MOBA, desc: "Multiplayer online battle arenas, strategies, patches, and esports."}
+      - {id: rts, en: RTS, desc: "Real-time strategy games, macro/micro play, campaigns, and esports."}
+      - {id: simulation, en: Simulation, desc: "Life, city, vehicle, and management simulators."}
+      - {id: survival, en: Survival, desc: "Survival crafting and endurance-based open-world gameplay."}
+      - {id: sandbox, en: Sandbox, desc: "Open-world sandboxes, creative building, and emergent play."}
+      - {id: indie, en: Indie, desc: "Independent games, small teams, experimental design, and art games."}
+      - {id: retro, en: Retro, desc: "Classic games, emulation, remasters, and preservation history."}
+      - {id: gamedev, en: Game Development, desc: "Engines, design, programming, art, production, and pipelines."}
+      - {id: reviews, en: Reviews, desc: "Critiques, impressions, scorecards, and buying guides."}
+      - {id: speedrun, en: Speedrunning, desc: "Route planning, records, glitches, and marathons."}
+      - {id: tabletop, en: Tabletop & Board Games, desc: "Board games, TTRPGs, miniatures, and hobby culture."}

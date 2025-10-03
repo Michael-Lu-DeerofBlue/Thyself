@@ -5,7 +5,7 @@ OUT=ml/out
 MODEL_PT=$(OUT)/model.pt
 CONFIG=ml/configs/default.yaml
 
-.PHONY: train eval infer export tests
+.PHONY: train eval infer export tests apply-titles
 
 train:
 	$(PY) ml/src/train.py --data $(DATA) --t0 $(T0) --out_dir $(OUT)
@@ -26,3 +26,7 @@ export:
 
 tests:
 	pytest -q
+
+# Apply taxonomy to titles.json (usage: make apply-titles [mode=supervised] [input=ml/data/titles.json] [output=ml/data/titles_tagged.json])
+apply-titles:
+	$(PY) tools/apply_titles.py --mode $(mode) --input $(input) --output $(output)
